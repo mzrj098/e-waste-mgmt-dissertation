@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SEMIS Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container mt-4">
+    <h1 class="text-center">SEMIS – Smart E-Waste Management</h1>
+    <ul class="nav nav-tabs" id="roleTabs">
+        <li class="nav-item"><a class="nav-link active" data-bs-toggle="tab" href="#citizen">Citizen</a></li>
+        <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#recycler">Recycler</a></li>
+        <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#regulator">Regulator</a></li>
+    </ul>
+
+    <div class="tab-content mt-3">
+        <div class="tab-pane fade show active" id="citizen">
+            <h3>Your Points & Badges</h3>
+            <div id="citizenContent"></div>
+        </div>
+        <div class="tab-pane fade" id="recycler">
+            <h3>Current Stock & Value</h3>
+            <div id="recyclerContent"></div>
+        </div>
+        <div class="tab-pane fade" id="regulator">
+            <h3>Sustainability & Compliance</h3>
+            <div id="regulatorContent"></div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    // Fetch data every 5 seconds (thesis refresh rate)
+    setInterval(() => {
+        fetch('/api/dashboard/citizen').then(r=>r.json()).then(d=> {
+            document.getElementById('citizenContent').innerHTML = `<h4>${d.points} pts</h4><p>Badges: ${d.badges.join(', ')}</p>`;
+        });
+        // Similarly for other roles...
+    }, 5000);
+</script>
+</body>
+</html>
